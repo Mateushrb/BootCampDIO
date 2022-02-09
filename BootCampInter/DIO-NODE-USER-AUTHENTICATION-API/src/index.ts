@@ -1,6 +1,9 @@
 // Importação do gerenciador de rotas
 import express from 'express';
 
+// Importação do gerenciador de error
+import errorHandler from './middlewares/error-handler.middleware';
+
 // Importação das rotas
 import statusRoute from './routes/status.route';
 import usersRoute from './routes/users.route';
@@ -9,15 +12,16 @@ import usersRoute from './routes/users.route';
 // Instância da biblioteca
 const app = express();
 
-// Midwares
+// Configuração do servidor
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}))
 
 // Rotas
+app.use(statusRoute)
 app.use(usersRoute);
 
-// Rota para o teste
-app.use(statusRoute)
+// Configuração dos Handlers de Erro
+app.use(errorHandler)
 
 // Inicialização do servidor
 app.listen(3000, () => {
