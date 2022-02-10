@@ -12,11 +12,10 @@ const usersRoute = Router();
 
 // 1 //
 usersRoute.get('/users', async (req: Request, res: Response, next: NextFunction) => {
-
-
     const users = await userRepository.findAllUsers();
     res.status(StatusCodes.OK).json({users});
 });
+
 
 // 2 //
 usersRoute.get('/users/:uuid', async (req: Request<{ uuid: string }>, res: Response, next: NextFunction) => {
@@ -29,12 +28,14 @@ usersRoute.get('/users/:uuid', async (req: Request<{ uuid: string }>, res: Respo
     }
 });
 
+
 // 3 //
 usersRoute.post('/users', async (req: Request, res: Response, next: NextFunction) => {
     const newUser = req.body;
     const uuid = await userRepository.create(newUser);
     res.status(StatusCodes.CREATED).send(uuid);
 });
+
 
 // 4 //
 usersRoute.put('/users/:uuid', async (req: Request<{ uuid: string }>, res: Response, next: NextFunction) => {
@@ -45,6 +46,7 @@ usersRoute.put('/users/:uuid', async (req: Request<{ uuid: string }>, res: Respo
     await userRepository.update(modifiedUser);
     res.status(StatusCodes.OK).send();
 });
+
 
 // 5 //
 usersRoute.delete('/users/:uuid', async (req: Request<{ uuid: string }>, res: Response, next: NextFunction) => {
